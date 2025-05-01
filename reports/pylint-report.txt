@@ -1,0 +1,175 @@
+************* Module checksum_speed_test
+checksum_speed_test.py:105:0: C0301: Line too long (124/100) (line-too-long)
+checksum_speed_test.py:109:0: C0325: Unnecessary parens after 'not' keyword (superfluous-parens)
+checksum_speed_test.py:50:11: W0718: Catching too general exception Exception (broad-exception-caught)
+checksum_speed_test.py:65:11: W0718: Catching too general exception Exception (broad-exception-caught)
+checksum_speed_test.py:83:11: W0718: Catching too general exception Exception (broad-exception-caught)
+checksum_speed_test.py:98:11: W0718: Catching too general exception Exception (broad-exception-caught)
+checksum_speed_test.py:102:0: C0116: Missing function or method docstring (missing-function-docstring)
+checksum_speed_test.py:114:18: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+checksum_speed_test.py:118:18: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+checksum_speed_test.py:122:18: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+checksum_speed_test.py:127:16: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+checksum_speed_test.py:132:18: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+************* Module checksum_speed_test_crontab
+checksum_speed_test_crontab.py:56:11: W0718: Catching too general exception Exception (broad-exception-caught)
+checksum_speed_test_crontab.py:71:11: W0718: Catching too general exception Exception (broad-exception-caught)
+checksum_speed_test_crontab.py:89:11: W0718: Catching too general exception Exception (broad-exception-caught)
+checksum_speed_test_crontab.py:104:11: W0718: Catching too general exception Exception (broad-exception-caught)
+checksum_speed_test_crontab.py:108:0: C0116: Missing function or method docstring (missing-function-docstring)
+checksum_speed_test_crontab.py:117:62: W0640: Cell variable filepath defined in loop (cell-var-from-loop)
+checksum_speed_test_crontab.py:119:62: W0640: Cell variable filepath defined in loop (cell-var-from-loop)
+checksum_speed_test_crontab.py:121:64: W0640: Cell variable filepath defined in loop (cell-var-from-loop)
+checksum_speed_test_crontab.py:123:64: W0640: Cell variable filepath defined in loop (cell-var-from-loop)
+checksum_speed_test_crontab.py:111:22: W0612: Unused variable 'dirs' (unused-variable)
+************* Module test_checksum_speed_test
+test_checksum_speed_test.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+test_checksum_speed_test.py:6:0: C0116: Missing function or method docstring (missing-function-docstring)
+test_checksum_speed_test.py:11:0: C0116: Missing function or method docstring (missing-function-docstring)
+test_checksum_speed_test.py:16:0: C0116: Missing function or method docstring (missing-function-docstring)
+test_checksum_speed_test.py:21:0: C0116: Missing function or method docstring (missing-function-docstring)
+test_checksum_speed_test.py:26:0: C0116: Missing function or method docstring (missing-function-docstring)
+test_checksum_speed_test.py:31:0: C0116: Missing function or method docstring (missing-function-docstring)
+test_checksum_speed_test.py:1:0: R0801: Similar lines in 2 files
+==checksum_speed_test:[39:102]
+==checksum_speed_test_crontab:[45:108]
+    try:
+        with open(file, "rb") as afile:
+            buffersize = 4096
+            buffr = afile.read(buffersize)
+            crcvalue = 0
+            while len(buffr) > 0:
+                crcvalue = zlib.crc32(buffr, crcvalue)
+                buffr = afile.read(buffersize)
+        return format(crcvalue & 0xFFFFFFFF, "08x")
+
+    except Exception:
+        return None
+
+
+def md5_4096(file):
+    """
+    Hashlib code
+    """
+    try:
+        hash_md5 = hashlib.md5()
+        with open(file, "rb") as fname:
+            for chunk in iter(lambda: fname.read(4096), b""):
+                hash_md5.update(chunk)
+        return hash_md5.hexdigest()
+
+    except Exception:
+        return None
+
+
+def crc_65536(file):
+    """
+    Zlib code
+    """
+    try:
+        with open(file, "rb") as afile:
+            buffersize = 65536
+            buffr = afile.read(buffersize)
+            crcvalue = 0
+            while len(buffr) > 0:
+                crcvalue = zlib.crc32(buffr, crcvalue)
+                buffr = afile.read(buffersize)
+        return format(crcvalue & 0xFFFFFFFF, "08x")
+
+    except Exception:
+        return None
+
+
+def md5_65536(file):
+    """
+    Hashlib code
+    """
+    try:
+        hash_md5 = hashlib.md5()
+        with open(file, "rb") as fname:
+            for chunk in iter(lambda: fname.read(65536), b""):
+                hash_md5.update(chunk)
+        return hash_md5.hexdigest()
+
+    except Exception:
+        return None
+
+
+def main(): (duplicate-code)
+test_checksum_speed_test.py:1:0: R0801: Similar lines in 2 files
+==checksum_speed_test:[135:163]
+==checksum_speed_test_crontab:[123:151]
+                    logger.info(
+                        "%s\t CRC32 4096\t %s\t %s\t Python <version>",
+                        filepath,
+                        size_mb,
+                        crc_time,
+                    )
+                    logger.info(
+                        "%s\t MD5 4096\t %s\t %s\t Python <version>",
+                        filepath,
+                        size_mb,
+                        md5_time,
+                    )
+                    logger.info(
+                        "%s\t CRC32 65536\t %s\t %s\t Python <version>",
+                        filepath,
+                        size_mb,
+                        crc2_time,
+                    )
+                    logger.info(
+                        "%s\t MD5 65536\t %s\t %s\t Python <version>",
+                        filepath,
+                        size_mb,
+                        md52_time,
+                    )
+
+
+if __name__ == "__main__":
+    main() (duplicate-code)
+test_checksum_speed_test.py:1:0: R0801: Similar lines in 2 files
+==checksum_speed_test:[75:93]
+==checksum_speed_test_crontab:[48:66]
+            buffr = afile.read(buffersize)
+            crcvalue = 0
+            while len(buffr) > 0:
+                crcvalue = zlib.crc32(buffr, crcvalue)
+                buffr = afile.read(buffersize)
+        return format(crcvalue & 0xFFFFFFFF, "08x")
+
+    except Exception:
+        return None
+
+
+def md5_65536(file):
+    """
+    Hashlib code
+    """
+    try:
+        hash_md5 = hashlib.md5()
+        with open(file, "rb") as fname: (duplicate-code)
+test_checksum_speed_test.py:1:0: R0801: Similar lines in 2 files
+==checksum_speed_test:[42:60]
+==checksum_speed_test_crontab:[81:99]
+            buffr = afile.read(buffersize)
+            crcvalue = 0
+            while len(buffr) > 0:
+                crcvalue = zlib.crc32(buffr, crcvalue)
+                buffr = afile.read(buffersize)
+        return format(crcvalue & 0xFFFFFFFF, "08x")
+
+    except Exception:
+        return None
+
+
+def md5_65536(file):
+    """
+    Hashlib code
+    """
+    try:
+        hash_md5 = hashlib.md5()
+        with open(file, "rb") as fname: (duplicate-code)
+
+------------------------------------------------------------------
+Your code has been rated at 8.09/10 (previous run: 8.09/10, +0.00)
+
