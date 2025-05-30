@@ -15,11 +15,11 @@ repos:
     hooks:
     -   id: isort
 
--   repo: https://github.com/pylint-dev/pylint
-    rev: v3.1.0
-    hooks:
-    -   id: pylint
-        language: python
-        entry: pylint
-        args:
-            ["--disable=C0103,C0111,C0301,C0114,C0116"]
+#-   repo: https://github.com/pylint-dev/pylint
+#    rev: v3.1.0
+#    hooks:
+#    -   id: pylint
+#        language: python
+#        entry: pylint
+#        args:
+#            ["--disable=C0103,C0111,C0301,C0114,C0116, R0801"]

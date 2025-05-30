@@ -41,7 +41,7 @@ paths = [
 
 def crc_4096(file):
     """
-    Zlib code
+    Zlib code for CRC 4096
     """
     try:
         with open(file, "rb") as afile:

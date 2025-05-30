@@ -47,7 +47,8 @@ def crc_4096(file):
                 buffr = afile.read(buffersize)
         return format(crcvalue & 0xFFFFFFFF, "08x")
 
-    except Exception:
+    except Exception as err:
+        print(err)
         return None
 
 
@@ -62,7 +63,8 @@ def md5_4096(file):
                 hash_md5.update(chunk)
         return hash_md5.hexdigest()
 
-    except Exception:
+    except Exception as err:
+        print(err)
         return None
 
 
@@ -101,15 +103,18 @@ def md5_65536(file):
 
 def main():
     if len(sys.argv) < 2:
+        print(sys.argv)
         print(
             "Please remember to supply a file name to run size checks against:\npython3 checksum.py /path_to_file/video.mkv"
         )
     else:
+        print(sys.argv)
         filepath = sys.argv[1]
         if not (os.path.isfile(filepath)):
             print("ERROR: Path not valid. Please try again.")
         else:
             size = os.stat(filepath)
+            print(size)
             size_mb = int(size.st_size / (1024 * 1024))
             print("File {} size is {} in MegaBytes".format(filepath, size_mb))
             print("Beginning the CRC32 4096 speed test checks for your file")
